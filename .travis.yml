@@ -9,5 +9,5 @@ script:
   - ./gradlew test build
 
 after_success:
-   - ./gradlew cobertura coveralls
+   - ./gradlew coveralls
    - ./gradlew codacyUpload
