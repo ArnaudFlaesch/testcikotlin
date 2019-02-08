@@ -12,5 +12,5 @@ build:
                   file: '[target/site/jacoco/jacoco.xml]'
                   format: 'jacoco'
                   
-    checks:
-        java: true
+checks:
+    java: true
