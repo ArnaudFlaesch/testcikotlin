@@ -16,7 +16,7 @@ buildscript {
 
 plugins {
 	id 'net.saliman.cobertura' version '2.3.1'
-	id 'com.github.kt3k.coveralls' version '2.8.2'
+	id("com.github.kt3k.coveralls") version "2.8.2"
 	id "io.github.ddimtirov.codacy" version "0.1.0"
 }
 
@@ -44,9 +44,39 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-reflect"
 	runtimeOnly 'com.h2database:h2'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	implementation 'com.github.tobilarscheid.codacy-coverage-reporter:codacy-coverage-reporter:1.0.10'
 }
 
 cobertura.coverageFormats = ['html', 'xml']
+
+task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
+   main = "com.codacy.CodacyCoverageReporter"
+   classpath = configurations.codacy
+   args = [
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
+           ]
+}
+
+task (codacyDepsize) << {
+def size = 0;
+configurations.codacy.collect { it.length() / (1024 * 1024) }.each { size += it }
+println "Total dependencies size: ${Math.round(size * 100) / 100} Mb"
+
+configurations
+        .codacy
+        .sort { -it.length() }
+        .each { println "${it.name} : ${Math.round(it.length() / (1024) * 100) / 100} kb" }
+}
+
+task (codacyLocs) << {
+    configurations.codacy.each {
+        String jarName = it
+        println jarName
+    }
+}
 
 compileKotlin {
 	kotlinOptions {
