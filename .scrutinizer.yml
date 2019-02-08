@@ -1,0 +1,16 @@
+build:
+    environment:
+        sdkman:
+            - java
+            - gradle@4.2.1
+    nodes:
+        tests-with-coverage:
+          tests:
+            override:
+              - command: ./gradlew test build
+                coverage:
+                  file: '[target/site/jacoco/jacoco.xml]'
+                  format: 'jacoco'
+                  
+    checks:
+        java: true
