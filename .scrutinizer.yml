@@ -2,7 +2,10 @@ build:
     environment:
         sdkman:
             - java
-            - gradle@4.2.1
+    dependencies:
+        before:
+            - chmod +x gradlew
+            - chmod +x gradle/wrapper/gradle-wrapper.jar
     nodes:
         tests-with-coverage:
           tests:
