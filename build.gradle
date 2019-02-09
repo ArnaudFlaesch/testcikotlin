@@ -16,12 +16,21 @@ buildscript {
 }
 
 plugins {
-	id 'net.saliman.cobertura' version '2.3.1'
+	id 'jacoco'
 	id("com.github.kt3k.coveralls") version "2.8.2"
 	id "io.github.ddimtirov.codacy" version "0.1.0"
 }
 
-cobertura.coverageFormats = ['html', 'xml']
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+}
+
+coveralls {
+    sourceDirs += ['src/main/kotlin']
+}
 
 apply plugin: 'kotlin'
 apply plugin: 'kotlin-spring'
