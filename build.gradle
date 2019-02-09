@@ -6,6 +6,7 @@ buildscript {
 	repositories {
 		mavenCentral()
 		maven { url 'https://jitpack.io' }
+		maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
 	}
 	dependencies {
 		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
