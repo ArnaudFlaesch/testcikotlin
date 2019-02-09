@@ -21,6 +21,7 @@ plugins {
 	id 'net.saliman.cobertura' version '2.3.1'
 	id 'com.github.kt3k.coveralls' version '2.8.2'
 	id "io.github.ddimtirov.codacy" version "0.1.0"
+	compile 'com.typesafe.netty:netty-http-pipelining:1.1.2'
 }
 
 cobertura.coverageFormats = ['html', 'xml']
@@ -48,6 +49,9 @@ sourceCompatibility = '1.8'
 
 repositories {
 	mavenCentral()
+	jcenter()
+		maven { url 'https://jitpack.io' }
+		maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
 }
 
 dependencies {
