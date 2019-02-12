@@ -49,8 +49,9 @@ sourceCompatibility = '1.8'
 repositories {
 	mavenCentral()
 	jcenter()
-		maven { url 'https://jitpack.io' }
-		maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
+	maven { url 'https://jitpack.io' }
+	maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
+    maven { url "http://dl.bintray.com/typesafe/maven-releases" }
 }
 
 dependencies {
@@ -60,6 +61,9 @@ dependencies {
 	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 	compile "org.jetbrains.kotlin:kotlin-reflect"
 	compile 'com.h2database:h2'
+	
+	codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
+	
 	//Junit 5
 	testCompile('org.springframework.boot:spring-boot-starter-test') {
 		exclude module: 'junit'
@@ -67,6 +71,18 @@ dependencies {
 	testImplementation('org.junit.jupiter:junit-jupiter-api')
 	testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
 	testCompile('org.springframework.boot:spring-boot-starter-test')
+}
+
+task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = configurations.codacy
+    args = [
+            "report",
+            "-l",
+            "Java",
+            "-r",
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    ]
 }
 
 compileKotlin {
