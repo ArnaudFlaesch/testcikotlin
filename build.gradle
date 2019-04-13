@@ -77,15 +77,15 @@ test {
 	useJUnitPlatform()
 }
 
-task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
+task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
 	main = "com.codacy.CodacyCoverageReporter"
 	classpath = configurations.codacy
 	args = [
+			"report",
 			"-l",
 			"Java",
-			"reports",
 			"-r",
-			"${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
+			"${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
 	]
 }
 
