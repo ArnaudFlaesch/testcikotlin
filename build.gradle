@@ -16,11 +16,10 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
 	}
 
+	test {
+		useJUnitPlatform()
+	}
 
-}
-
-test {
-	useJUnitPlatform()
 }
 
 plugins {
