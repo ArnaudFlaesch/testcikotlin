@@ -62,8 +62,6 @@ dependencies {
 	compile "org.jetbrains.kotlin:kotlin-reflect"
 	compile 'com.h2database:h2'
 	
-	codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
-	
 	//Junit 5
 	testCompile('org.springframework.boot:spring-boot-starter-test') {
 		exclude module: 'junit'
