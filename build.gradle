@@ -55,51 +55,38 @@ sourceCompatibility = '1.8'
 repositories {
 	mavenCentral()
 	jcenter()
-		maven { url 'https://jitpack.io' }
-		maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
+	maven { url 'https://jitpack.io' }
+	maven { url 'http://repo.typesafe.com/typesafe/releases/com/typesafe/netty/netty-http-pipelining/'}
+    	maven { url "http://dl.bintray.com/typesafe/maven-releases" }
 }
 
 dependencies {
-	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-	implementation 'org.springframework.boot:spring-boot-starter-web'
-	implementation 'com.fasterxml.jackson.module:jackson-module-kotlin'
-	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
-	implementation "org.jetbrains.kotlin:kotlin-reflect"
-	runtimeOnly 'com.h2database:h2'
-	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+	compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+	compile 'org.springframework.boot:spring-boot-starter-web'
+	compile 'com.fasterxml.jackson.module:jackson-module-kotlin'
+	compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+	compile "org.jetbrains.kotlin:kotlin-reflect"
+	compile 'com.h2database:h2'
+	
+	codacy 'com.github.codacy:codacy-coverage-reporter:-SNAPSHOT'
+	
+	//Junit 5
+	testCompile('org.springframework.boot:spring-boot-starter-test') {
 		exclude module: 'junit'
 	}
-	testImplementation 'org.junit.jupiter:junit-jupiter-api'
-	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+	testImplementation('org.junit.jupiter:junit-jupiter-api')
+	testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
-task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
-   main = "com.codacy.CodacyCoverageReporter"
-   classpath = configurations.codacy
-   args = [
-            "-l",
-            "Java",
+task sendCoverageToCodacy(type: JavaExec, dependsOn: jacocoTestReport) {
+    main = "com.codacy.CodacyCoverageReporter"
+    classpath = configurations.codacy
+    args = [
+            "report",
             "-r",
-            "${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
-           ]
-}
-
-task (codacyDepsize) << {
-def size = 0;
-configurations.codacy.collect { it.length() / (1024 * 1024) }.each { size += it }
-println "Total dependencies size: ${Math.round(size * 100) / 100} Mb"
-
-configurations
-        .codacy
-        .sort { -it.length() }
-        .each { println "${it.name} : ${Math.round(it.length() / (1024) * 100) / 100} kb" }
-}
-
-task (codacyLocs) << {
-    configurations.codacy.each {
-        String jarName = it
-        println jarName
-    }
+            "${buildDir}/reports/jacoco/test/jacocoTestReport.xml"
+    ]
 }
 
 compileKotlin {
