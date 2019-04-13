@@ -1,6 +1,5 @@
 package com.nono.dash.controller
 
-import com.nono.dash.UserController
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.jupiter.api.Test
 import org.springframework.beans.factory.annotation.Autowired
