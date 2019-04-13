@@ -14,7 +14,13 @@ buildscript {
 		classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-allopen:${kotlinVersion}")
 		classpath("org.jetbrains.kotlin:kotlin-noarg:${kotlinVersion}")
-	}	
+	}
+
+
+}
+
+test {
+	useJUnitPlatform()
 }
 
 plugins {
@@ -60,7 +66,11 @@ dependencies {
 	implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
 	implementation "org.jetbrains.kotlin:kotlin-reflect"
 	runtimeOnly 'com.h2database:h2'
-	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude module: 'junit'
+	}
+	testImplementation 'org.junit.jupiter:junit-jupiter-api'
+	testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
 }
 
 task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
