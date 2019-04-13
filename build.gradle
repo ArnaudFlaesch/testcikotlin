@@ -81,6 +81,8 @@ task uploadCoverageToCodacy(type: JavaExec, dependsOn : jacocoTestReport) {
 	main = "com.codacy.CodacyCoverageReporter"
 	classpath = configurations.codacy
 	args = [
+			"-l",
+			"Java",
 			"reports",
 			"-r",
 			"${buildDir}/test-results/jacoco/${archivesBaseName}.xml"
