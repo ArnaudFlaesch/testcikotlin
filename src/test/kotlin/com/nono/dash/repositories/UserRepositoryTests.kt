@@ -20,5 +20,6 @@ class UserRepositoryTests(@Autowired val repo: PersonRepository) {
         val p = Person(1,"Paul", "HelloStreet")
         repo.save(p)
         assertThat(repo.findAll()).hasSize(1)
+        assertThat(repo.getByAddress("HelloStreet")).isNotNull
     }
 }
