@@ -1,4 +1,4 @@
-package com.nono.dash
+package com.nono.dash.repositories
 
 import com.nono.dash.model.Person
 import com.nono.dash.repositories.PersonRepository
@@ -13,7 +13,7 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @SpringBootTest
 @ExtendWith(SpringExtension::class)
-class HibernateDemoApplicationTests(@Autowired val repo: PersonRepository) {
+class UserRepositoryTests(@Autowired val repo: PersonRepository) {
 
     @Test
     fun `basic entity checks`() {

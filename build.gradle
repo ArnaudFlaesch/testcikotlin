@@ -68,6 +68,7 @@ dependencies {
 	}
 	testImplementation('org.junit.jupiter:junit-jupiter-api')
 	testRuntimeOnly('org.junit.jupiter:junit-jupiter-engine')
+	testCompile 'io.rest-assured:rest-assured:3.3.0'
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 }
 
